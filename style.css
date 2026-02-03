@@ -1,6 +1,6 @@
 body {
     background: rgb(170, 130, 85);
-    color: rgb(253, 55, 5);
+    color: rgb(0, 0, 0);
     padding: 10px;
     font-family: Arial, sans-serif;
 }
@@ -73,4 +73,31 @@ main {
 
 h2, h3 {
     margin: 0px;
+}
+
+
+/* Portfolio styles */
+.content h1 {
+  color: black;
+}
+
+#portfolio {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#portfolio li {
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+#portfolio li:hover {
+  background: #eee;
+}
+
+#portfolio a {
+  text-decoration: none;
+  color: #454545;
 }
