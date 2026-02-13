@@ -1,8 +1,8 @@
 body {
-    background: rgb(170, 130, 85);
+    background: rgb(37, 147, 211);
     color: rgb(0, 0, 0);
     padding: 10px;
-    font-family: Arial, sans-serif;
+    font-family:Times New Roman;
 }
 
 #all-contents {
@@ -12,7 +12,7 @@ body {
 
 /* navigation menu */
 nav {
-    background: rgb(179, 7, 30);
+    background: rgb(16, 95, 119);
     margin: 0 auto;
     display: flex;
     padding: 10px;
@@ -27,25 +27,25 @@ h1 {
 }
 
 #nav-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+    list-style-type: dotted;
+    margin:0;
+    padding: 10;
     display: flex;
 }
 
 .nav-li {
     display: inline-block;
-    padding: 0 10px;
+    padding: 0 6px;
 }
 
 a {
-    text-decoration: none;
-    color: #ffffff;
+    text-decoration: underline;
+    color: #8d8484;
 }
 
 /* main container area beneath menu */
 main {
-    background: rgb(146, 114, 45);
+    background: rgb(19, 80, 121);
     display: flex;
     margin-top: 20px;
 }
@@ -66,7 +66,7 @@ main {
 
 /* interests section styles */
 #interests {
-    border: 4px silver ridge;
+    border: 4px rgb(0, 0, 0) ridge;
     padding: 8px;
     margin-top: 20px;
 }
@@ -78,7 +78,7 @@ h2, h3 {
 
 /* Portfolio styles */
 .content h1 {
-  color: black;
+  color: rgb(17, 17, 17);
 }
 
 #portfolio {
@@ -87,17 +87,22 @@ h2, h3 {
 }
 
 #portfolio li {
-  background: #fff;
+  background: #115966dc;
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 10px;
 }
 
 #portfolio li:hover {
-  background: #eee;
+  background: #e01b1b;
 }
 
 #portfolio a {
-  text-decoration: none;
-  color: #454545;
+  text-decoration: underline;
+  color: #000000;
+}
+
+#interest-ul {
+list-style-type: katakana;
+padding-left: 20px;;
 }

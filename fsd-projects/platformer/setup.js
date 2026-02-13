@@ -19,7 +19,7 @@ const playerScale = 0.8; //makes the player just a bit smaller. Doesn't affect t
 // Player variables
 const player = {
   x: 50,
-  y: 100,
+  y:650,
   speedX: 0,
   speedY: 0,
   width: undefined,
@@ -97,9 +97,12 @@ let animationDetails = {};
 
 var collectableList = {
   database: { image: "images/collectables/database.png" },
-  diamond: { image: "images/collectables/diamond-head.png" },
+  diamond: { image: "images/collectables/Diamondp.png" },
   grace: { image: "images/collectables/grace-head.png" },
-  kennedi: { image: "images/collectables/kennedi-head.png" },
+  Master: { image: "images/collectables/MasterSword.webp" },
   max: { image: "images/collectables/max-head.png" },
-  steve: { image: "images/collectables/steve-head.png" },
+JackBlack: { image: "images/collectables/jackblack.png" },
+netherite:{image:"images/collectables/Netheritep.webp"},
+DanTdm:{image:"images/collectables/DanTdm.jpg"}
+
 };

@@ -27,24 +27,41 @@ $(function () {
     //////////////////////////////////
 
     // TODO 1 - Enable the Grid
-    // toggleGrid();
+    toggleGrid()
 
 
     // TODO 2 - Create Platforms
+createPlatform (100,610,100,10,"red")
+createPlatform (100,485,100,10,"red")
+createPlatform(347,400,100,10,"red")
+createPlatform(100,280,100,10,"blue") 
+createPlatform(320,200,100,10,"blue")
+createPlatform(600,420,100,10,"blue")
+createPlatform(860,340,100,10,"red")
+createPlatform(860,230,57,10,"blue")
+createPlatform(1000,140,100,10,"red")
+
+createBadPlatform(1000,400,100,10,"red")
+   createBadPlatform(150,700,10,10,"lightblue")
+createBadPlatform(430,700,10,10,"black")
 
 
-
-
-    // TODO 3 - Create Collectables
-
+// TODO 3 - Create Collectables
+    createCollectable("netherite", 610, 200);
+createCollectable("JackBlack",160, 201,1,1);
+createCollectable("Master",160, 400,1,1);
+createCollectable("diamond",430,600,1,1)
+createCollectable("netherite",800,100,)
+createCollectable("DanTdm",1300,300,)
 
 
     
     // TODO 4 - Create Cannons
 
-
-    
-    
+createCannon("top", 300, 1600);
+  createCannon("right",500,2000);
+    createCannon("top",600,1400);
+    createCannon("bottom",600,1400)
     //////////////////////////////////
     // ONLY CHANGE ABOVE THIS POINT //
     //////////////////////////////////
