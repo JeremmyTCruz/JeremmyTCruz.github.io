@@ -40,7 +40,12 @@ createPlatform(600,420,100,10,"blue")
 createPlatform(860,340,100,10,"red")
 createPlatform(860,230,57,10,"blue")
 createPlatform(1000,140,100,10,"red")
+createPlatform(200,400,10,70,"red")
+createPlatform(1300,640,100,10)
+createPlatform(1100,640,100,10)
 
+
+createBadPlatform(1020,730,300,10)
 createBadPlatform(1000,400,100,10,"red")
    createBadPlatform(150,700,10,10,"lightblue")
 createBadPlatform(430,700,10,10,"black")
@@ -53,13 +58,14 @@ createCollectable("Master",160, 400,1,1);
 createCollectable("diamond",430,600,1,1)
 createCollectable("netherite",800,100,)
 createCollectable("DanTdm",1300,300,)
-
+createCollectable("diamond",1000,530)
+createCollectable("diamond",1220,530)
 
     
     // TODO 4 - Create Cannons
 
 createCannon("top", 300, 1600);
-  createCannon("right",500,2000);
+  createCannon("right",500,1700);
     createCannon("top",600,1400);
     createCannon("bottom",600,1400)
     //////////////////////////////////
