@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 10% 10%, #0f4f8f 0%, #06224a 55%, #030a1f 100%),
+                        linear-gradient(150deg, rgba(212,175,55,0.2), rgba(14, 43, 99, 0.8));
+            color: #f5e8b5;
+            font-family: 'Georgia', serif;
+            padding: 40px 20px;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            z-index: 999;
+            background: rgba(212, 175, 55, 0.95);
+            color: #10223d;
+            border: 2px solid #f4e6a2;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+
+        .home-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55);
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 3px solid #d4af37;
+            padding-bottom: 30px;
+        }
+
+        .gallery-header h1 {
+            font-size: 2.5em;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .gallery-header p {
+            font-size: 1.1em;
+            color: #b0b0b0;
+            font-style: italic;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .slideshow-preview {
+            position: relative;
+            background: linear-gradient(135deg, rgba(4, 34, 78, 0.9), rgba(2, 16, 42, 0.9));
+            border: 2px solid #d4af37;
+            border-radius: 14px;
+            margin-bottom: 40px;
+            padding: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: grid;
+            place-items: center;
+            min-height: 410px;
+        }
+
+        .slideshow-preview img {
+            max-width: 100%;
+            max-height: 330px;
+            border-radius: 10px;
+            border: 2px solid rgba(212, 175, 85, 0.7);
+            object-fit: contain;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+        }
+
+        .preview-caption {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 24, 54, 0.8);
+            color: #fbe9b5;
+            border: 1px solid #d4af37;
+            border-radius: 999px;
+            padding: 8px 14px;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+        }
+
+        .prev-btn,
+        .next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 2px solid #d4af37;
+            background: rgba(212, 175, 55, 0.8);
+            color: #10213a;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 4;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .prev-btn:hover,
+        .next-btn:hover {
+            transform: translateY(-50%) scale(1.07);
+            background: #f5e8aa;
+        }
+
+        .prev-btn { left: 16px; }
+        .next-btn { right: 16px; }
+
+        .auto-btn {
+            position: absolute;
+            right: 75px;
+            bottom: 16px;
+            border: 2px solid #d4af37;
+            background: rgba(212, 175, 55, 0.9);
+            color: #10223d;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transition: transform .2s ease;
+            z-index: 4;
+        }
+
+        .auto-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item {
+            background-color: #2a2a2a;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s ease;
+            border: 1px solid #444;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            box-shadow: 0 12px 36px rgba(212, 175, 55, 0.3);
+            transform: translateY(-5px);
+            border-color: #d4af37;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .image-caption {
+            text-align: center;
+            color: #d4af37;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+        }
+
+        .gallery-footer {
+            text-align: center;
+            border-top: 3px solid #d4af37;
+            padding-top: 30px;
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        .modal-caption {
+            color: #d4af37;
+            margin-top: 20px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 2.5em;
+            color: #d4af37;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-nav {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .modal-nav button {
+            background-color: rgba(212, 175, 55, 0.3);
+            color: #d4af37;
+            border: 2px solid #d4af37;
+            font-size: 2em;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 5px;
+        }
+
+        .modal-nav button:hover {
+            background-color: #d4af37;
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <button class="home-button" onclick="window.location.href='index.html';">HOME</button>
+    <div class="gallery-container">
+        <div class="gallery-header">
+            <h1>PHOTO SLIDESHOW</h1>
+            <p>Step through images 1 to 11 in blue & gold style</p>
+        </div>
+
+        <div class="slideshow-preview" id="slideshowPreview">
+            <img id="previewImage" src="assets/IMG_5923.JPG" alt="Slideshow Photo 1">
+            <div class="preview-caption" id="previewCaption">1 / 11 - Exhibit One</div>
+            <button class="prev-btn" id="previewPrev" aria-label="Previous">&#9664;</button>
+            <button class="next-btn" id="previewNext" aria-label="Next">&#9654;</button>
+            <button class="auto-btn" id="autoBtn" aria-label="Auto Play">Start Auto</button>
+        </div>
+
+        <div class="gallery-grid" id="gallery">
+            <div class="gallery-item" onclick="openModal(0)">
+                <img src="assets/IMG_5923.JPG" alt="Gallery photo 1">
+                <p class="image-caption">Exhibit I (1/11)</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(1)">
+                <img src="assets/IMG_5924.JPG" alt="Gallery photo 2">
+                <p class="image-caption">Exhibit II (2/11)</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(2)">
+                <img src="assets/IMG_6396.JPG" alt="Gallery photo 3">
+                <p class="image-caption">Exhibit III (3/11)</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(3)">
+                <img src="assets/IMG_5932.JPG" alt="Gallery photo 4">
+                <p class="image-caption">Exhibit IV (4/11)</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(4)">
+                <img src="assets/IMG_5933.JPG" alt="Gallery photo 5">
+                <p class="image-caption">Exhibit V (5/11)</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(5)">
+                <img src="assets/IMG_5938.JPG" alt="Gallery photo 6">
+                <p class="image-caption">Exhibit VI (6/11)</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(6)">
+                <img src="assets/IMG_5939.JPG" alt="Gallery photo 7">
+                <p class="image-caption">Exhibit VII (7/11)</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(7)">
+                <img src="assets/IMG_5942.JPG" alt="Gallery photo 8">
+                <p class="image-caption">Exhibit VIII (8/11)</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(8)">
+                <img src="assets/IMG_5944.JPG" alt="Gallery photo 9">
+                <p class="image-caption">Exhibit IX (9/11)</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(9)">
+                <img src="assets/IMG_5950.JPG" alt="Gallery photo 10">
+                <p class="image-caption">Exhibit X (10/11)</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(10)">
+                <img src="assets/IMG_6402.JPG" alt="Gallery photo 11">
+                <p class="image-caption">Exhibit XI (11/11)</p>
+            </div>
+        </div>
+
+        <div class="gallery-footer">
+            <p>&copy; 2026 My Gallery. All rights reserved.</p>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal" onclick="closeModal(event)">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <img class="modal-image" id="modalImage" src="" alt="Full-size view">
+            <p class="modal-caption" id="modalCaption"></p>
+        </div>
+        <div class="modal-nav">
+            <button onclick="previousImage()">&larr;</button>
+            <button onclick="nextImage()">&rarr;</button>
+        </div>
+    </div>
+
+    <script>
+        const images = [
+            { src: 'assets/IMG_5923.JPG', caption: 'Exhibit I' },
+            { src: 'assets/IMG_5924.JPG', caption: 'Exhibit II' },
+            { src: 'assets/IMG_6396.JPG', caption: 'Exhibit III' },
+            { src: 'assets/IMG_5932.JPG', caption: 'Exhibit IV' },
+            { src: 'assets/IMG_5933.JPG', caption: 'Exhibit V' },
+            { src: 'assets/IMG_5938.JPG', caption: 'Exhibit VI' },
+            { src: 'assets/IMG_5939.JPG', caption: 'Exhibit VII' },
+            { src: 'assets/IMG_5942.JPG', caption: 'Exhibit VIII' },
+            { src: 'assets/IMG_5944.JPG', caption: 'Exhibit IX' },
+            { src: 'assets/IMG_5950.JPG', caption: 'Exhibit X' },
+           { src: 'assets/IMG_6402.JPG', caption: 'Exhibit XI' },
+        ];
+
+        let currentIndex = 0;
+
+        const previewImage = document.getElementById('previewImage');
+        const previewCaption = document.getElementById('previewCaption');
+        const previewNext = document.getElementById('previewNext');
+        const previewPrev = document.getElementById('previewPrev');
+
+        function updatePreview(index) {
+            currentIndex = (index + images.length) % images.length;
+            previewImage.src = images[currentIndex].src;
+            previewImage.alt = `Slideshow Photo ${currentIndex + 1}`;
+            previewCaption.textContent = `${currentIndex + 1} / ${images.length} - ${images[currentIndex].caption}`;
+        }
+
+        function showNextPreview() {
+            updatePreview(currentIndex + 1);
+        }
+
+        function showPreviousPreview() {
+            updatePreview(currentIndex - 1);
+        }
+
+        previewNext.addEventListener('click', (e) => {
+            e.preventDefault();
+            showNextPreview();
+        });
+
+        previewPrev.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPreviousPreview();
+        });
+
+        const autoBtn = document.getElementById('autoBtn');
+        let autoplayInterval = null;
+
+        function toggleAutoplay() {
+            if (autoplayInterval) {
+                clearInterval(autoplayInterval);
+                autoplayInterval = null;
+                autoBtn.textContent = 'Start Auto';
+                autoBtn.style.background = 'rgba(212, 175, 55, 0.9)';
+            } else {
+                autoplayInterval = setInterval(() => {
+                    showNextPreview();
+                }, 3000);
+                autoBtn.textContent = 'Stop Auto';
+                autoBtn.style.background = '#d4af37';
+            }
+        }
+
+        autoBtn.addEventListener('click', toggleAutoplay);
+
+        function openModal(index) {
+            updatePreview(index);
+            const modal = document.getElementById('modal');
+            document.getElementById('modalImage').src = images[index].src;
+            document.getElementById('modalCaption').textContent = images[index].caption;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (event && event.target.id !== 'modal') return;
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            document.getElementById('modalImage').src = images[currentIndex].src;
+            document.getElementById('modalCaption').textContent = images[currentIndex].caption;
+        }
+
+        function previousImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            document.getElementById('modalImage').src = images[currentIndex].src;
+            document.getElementById('modalCaption').textContent = images[currentIndex].caption;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('modal');
+            if (!modal.classList.contains('active')) return;
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') previousImage();
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Initialize preview slideshow state
+        updatePreview(0);
+    </script>
+</body>
+</html>
